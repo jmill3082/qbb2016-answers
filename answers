@@ -1,8 +1,15 @@
 Question 1: How many lines are there?
 538689
 
+Used the following command
+wc ../data/BDGP6/BDGP6.Ensembl.85.gtf
+Manually added the number using nano command
+
 Question 2: How many lines deal with the gene Sxl?
 514
+
+Used the following command
+cut -f 9 ~/data/BDGP6/BDGP6.Ensembl.85.gtf | grep -c Sxl >> answers
 
 Question 3: What types of features are there?
 There are 9 types of features in this file:
@@ -16,6 +23,9 @@ stop_codon
 three_prime_utr
 transcript
 
+Used the following command
+cut -f 3 ~/data/BDGP6/BDGP6.Ensembl.85.gtf | sort | uniq | tail -9 >> answers
+
 Question 4: How many of each feature are there?
 There are
 160188 CDS
@@ -27,3 +37,6 @@ There are
  30296 stop_codon
  33034 three_prime_utr
  34740 transcript
+
+Used the following command
+cut -f 3 ~/data/BDGP6/BDGP6.Ensembl.85.gtf | sort | uniq -c | tail -9 >> answers

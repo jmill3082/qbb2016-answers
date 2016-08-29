@@ -1,0 +1,8 @@
+Supplemental exercise 2: Calculate the average length of all the features
+
+1138.99
+
+Command used for this exercise
+awk '{total += ($5-$4+1)} END {print total/NR}' ~/data/BDGP6/BDGP6.Ensembl.85.gtf >> suppex2
+
+Manually added command methodology with nanoy

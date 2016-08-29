@@ -1,0 +1,4 @@
+hisat2 -p 4 -x BDGP6 -U SRR072903.fastq -S SRR072903.sam
+samtools sort SRR072903.sam > SRR072903.bam
+samtools index SRR072903.bam
+stringtie SRR072903.bam -p 4 -G BDGP6.Ensembl.85.gtf -e -B -o SRR072903-STout.gtf

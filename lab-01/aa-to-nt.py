@@ -19,8 +19,6 @@ import itertools
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import stats
-import statsmodels.api as sm
-
 
 # Let's make a codon table! 
 
@@ -206,44 +204,112 @@ for m, seq in enumerate( new_nt_list ):
                 # It might be true that the test goes past the reference, in which case it does not
                 # matter, so we'll just move on
                     
-                if str(pos) not in dS:
+                if pos + 1 not in dS:
                    continue
                         
-                elif str(pos) in dS:
-                    dS[ pos ] += 1
+                elif pos + 1 in dS:
+                    dS[ pos + 1 ] += 1
             
                 elif test_cod == '---':
                     
                     # We do the same check here for the key at a given position.
                     
-                    if str(pos) not in dN:
+                    if pos + 1 not in dN:
                        continue
                         
-                    elif str(pos) in dN:
-                        dN[ pos ] += 1
+                    elif pos + 1 in dN:
+                        dN[ pos + 1 ] += 1
             
-                elif codon_table[ ref_cod ] != codon_table[ test_cod ]:
+            elif codon_table[ ref_cod ] != codon_table[ test_cod ]:
+                
+                # And again... 
+                
+                if pos + 1 not in dN:
+                   continue
                     
-                    # And again... 
-                    
-                    if str(pos) not in dN:
-                       continue
-                        
-                    elif str(pos) in dN:
-                        dN[ pos ] += 1
+                elif pos + 1 in dN:
+                    dN[ pos + 1 ] += 1
 
 # Diagnostic:
-print dN
-print dS
+# print dN
+# print dS
 
-                
+# Okay, now we need to initialize a list for our dN/dS values along the sequence.
+
+dN_over_dS = []
+
+# We also want to have the total dN and dS for the purpose of statistics, as well as a list of
+# the difference of dN and dS at each position.
+
+sum_dN = 0
+sum_dS = 0
+diff_dN_dS = []
+
+# Let's make our ratios. If the denominator is zero, we have undefined - we don't like that. If the numerator is zero, 
+# then the ratio is zero. So, let's make either case equal to zero. We'll also start with summing the dN and dS values 
+# and filling our list of differences.
+
+for key in dN:
+    if dN[ key ] == 0:
+        
+        # Diagnostic:
+        # print "dN = 0 for %s" % key
+        
+        dN_over_dS.append( 0 )
+        diff_dN_dS.append( float( dN[ key ] - dS[ key ] ) )
+        sum_dN += dN[ key ]
+        sum_dS += dS[ key ]
+    
+    elif dS[ key ] == 0:
+        
+        # Diagnostic:
+        # print "dS = 0 for %s" % key
+        
+        dN_over_dS.append( 0 )
+        diff_dN_dS.append( float( dN[ key ] - dS[ key ] ) )
+        sum_dN += dN[ key ]
+        sum_dS += dS[ key ]
+    
+    # Here we will get the ratio, which we have to adjust since we'll be dealing with logs.
+    
+    else:    
+        dN_over_dS.append( np.log( dN[ key ] + 1 ) / np.log( dS[ key ] + 1 )  )
+        diff_dN_dS.append( float( dN[ key ] - dS[ key ] ) )
+        sum_dN += dN[ key ]
+        sum_dS += dS[ key ]
+
+# Diagnostic:
+# print dN_over_dS
+# print diff_dN_dS
+    
+# We also want to use z score to determine whether a value is significantly different from the 
+# mean.
+
+z_diff_dN_dS = stats.zscore(diff_dN_dS)
+
+# Diagnostic:
+# print z_dN_over_dS
+# print z_diff_dN_dS    
+
+# Now, let's plot...
+
+plt.figure()
+for i, z in enumerate( z_diff_dN_dS ):
+    if z < 3:
+        plt.scatter( i, z, color="blue" )
+    else:
+        plt.scatter( i, z, color="red" )                
+plt.title( "Significant Positive Selection Sites by Codon" )
+plt.ylabel( "z-score of dN/dS" )
+plt.xlabel( "Codon Position" )
+plt.savefig( "dN_dS.png" )
+plt.show()
+
+# Finally, let's be a good coder and close the files we previously opened, since we are done.
 
 aa_file.close()
 nt_file.close()
 
-
-
-# Now to do the stats:
 
 
 

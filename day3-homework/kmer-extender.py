@@ -14,41 +14,68 @@ import fasta
 # In the command line, the data type is string, so it must be converted to data type integer.
 k = int( sys.argv[3] )
 
-# Get each target sequence, one at a time - will work with one at a time, so need a 'for' loop.
+# Let's work first with the query sequence, store it, and then work line-by-line with the targets...
+
+# Make a blank dictionary to put each unique kmer into with corresponding positions in the query sequence.
+# Since we are going to be referring to the query more often, it makes sense to hash this one, rather 
+# than hashing the target
+Q_kmer_positions = {}
+
+# Now, we can import the query sequence, and using the FASTAReader build the dictionary.
+for ident2, sequence2 in fasta.FASTAReader( open(sys.argv[2]) ):
+    
+    # In case the sequence has any differences in case, which could cause problems in string matching, 
+    # make all sequence upper case
+    sequence2 = sequence2.upper()
+
+    # Now, we will take each kmer in the query sequence we are working with, and make the dictionary.
+    for j in range( 0, len(sequence2) - k ):
+        kmer = sequence2[j : j + k ]
+
+        # For each kmer, determine if it is new. There are only two cases. Either it is new, or it is not.
+        # If it is new, add the kmer as a key and put the position into a new list. 
+        # If it is not new, append the list with the new position.
+        if kmer not in Q_kmer_positions:
+            Q_kmer_positions[ kmer ] = [ j ]
+        elif kmer in Q_kmer_positions:
+            Q_kmer_positions[ kmer ].append( j )
+
+        # Diagnostic:
+        # print Q_kmer_positions
+
+# Now that we have our query dictionary, let's work with the target sequences one at a time.
 for ident, sequence in fasta.FASTAReader( open(sys.argv[1]) ):
     
     # In case the sequence has any differences in case, which could cause problems in string matching, 
     # make all sequence upper case.
     sequence = sequence.upper()
-    
-    # Make a blank dictionary to put each unique kmer into with corresponding positions in the target sequence.
-    T_kmer_positions = {}
-    
-    # Now place each kmer into the dictionary with the positions at which it appears in the sequence.
-    # We will work with one at a time, so need a 'for' loop.
-    for i in range( 0, len(sequence) - k ):
-        T_kmer = sequence [i : i + k ]
-        
-        # For each kmer, determine if it is new. There are only two cases. Either it is new, or it is not.
-        # If it is new, add the kmer as a key and put the position into a new list. 
-        # If it is not new, append the list with the new position.
-        if T_kmer not in T_kmer_positions:
-            T_kmer_positions[ T_kmer ] = [ i ]
-        elif T_kmer in T_kmer_positions:
-            T_kmer_positions[ T_kmer ].append( i )
 
-        # Now that we have made the dictionary with all of the kmers in the target sequence we are working with,
-        # get each query sequence - will work with one at a time, so again need a 'for' loop.            
-        for ident2, sequence2 in fasta.FASTAReader( open(sys.argv[2]) ):
+    # We want to get ALL of the possible matches, so we will do an exhaustive search at EVERY nucleotide.
+    for i in range( 0, len(sequence) - k ):
+        kmer = sequence [i : i + k ]
+        
+        # Now what we want to do is check the query dictionary to see if the kmer from the target exists.
+        # If not, we will continue on down the line. If so, then we need to perform the extension matching.
+        if kmer not in Q_kmer_positions:
+            continue
+        elif kmer in Q_kmer_positions:
             
-            # In case the sequence has any differences in case, which could cause problems in string matching, 
-            # make all sequence upper case
-            sequence2 = sequence2.upper()
+            # Diagnostic:
+            # print kmer, Q_kmer_positions[ kmer ]
             
-            # Now, we will take each kmer in the query sequence we are working with, and check it agains the dictionary.
-            # We will again work with one kmer at a time, so we need a 'for' loop.
-            for j in range( 0, len(sequence2) - k ):
-                Q_kmer = sequence2[j : j + k ]
+            for kmer, value in Q_kmer_positions.iteritems():
+            
+                # Diagnostic:
+                print kmer, i, j
+                # Let's start at the first nucleotide in the kmer match and start moving to the left.
+                # while (2 + 2 == 4):
+                
+
+
+''''            
+   
+          
+            
             
                 # RIGHT EXTENSION
                 # We check to see if the query sequence is in the target sequence dictionary.
@@ -97,8 +124,7 @@ for ident, sequence in fasta.FASTAReader( open(sys.argv[1]) ):
                 # print "Position(s) in target %s" % T_kmer_positions[ T_kmer ],
                 # print "Position in query: %s" % j
                 
-                
-"""              
+             
                 # Left extension    
                     while Q_kmer in T_kmer_positions:
                         i = i - 1       
@@ -117,4 +143,4 @@ for ident, sequence in fasta.FASTAReader( open(sys.argv[1]) ):
                     print T_kmer, 
                     print "Position(s) in target %s" % T_kmer_positions[ T_kmer ],
                     print "Position in query: %s" % j
-"""
+'''

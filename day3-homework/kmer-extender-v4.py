@@ -116,6 +116,8 @@ for ident, sequence in fasta.FASTAReader( open(sys.argv[1]) ):
 for ident in sorted( hits, key = len, reverse = True ):                
     print ident, hits
 
+# This does not print the output in a nice, line-by-line format.
+# I will need to come back and change this at a later date, to prettify the output.
                     
                 
                 

@@ -9,6 +9,10 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
+# Try plt.style,use('538')
+# Try plt.style.use('ggplot')
+# Look up matplotlib galleries for more inspiration
+
 df = pd.read_table( sys.argv[1] )
 df_roi = df[ "FPKM" ] > 0
 df_hist = df[ df_roi ][ "FPKM" ]
@@ -29,9 +33,10 @@ hist_values = np.log10(df_hist)
 # print max(hist_values)
 
 plt.figure()
-n, bins, patches = plt.hist(hist_values, range = [-4, 4], bins = 50)
+plt.hist(hist_values, range = [-4, 4], bins = 50)
 plt.savefig( "FPKM-hist.png" )
 plt.title( "Frequency of log(FPKM)" )
 plt.xlabel( "log(FPKM)" )
 plt.ylabel( "occurrences of log(FPKM)" )
 plt.show()
+

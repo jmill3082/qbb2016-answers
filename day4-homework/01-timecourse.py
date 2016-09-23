@@ -90,8 +90,7 @@ df_meta_rep = pd.read_csv( sys.argv[3] )
 ctab_rep_dir = sys.argv[4]
 
 fem_Sxl_rep = []
-mal_Sxl_rep = []
-df_roi_rep = df_meta_rep[ "sex" ] == "female"
+mal_Sxl_rep = []
 df_roi2_rep = df_meta_rep[ "sex" ] == "male"
 
 # Diagnostic:

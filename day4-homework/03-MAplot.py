@@ -29,15 +29,15 @@ M = (FPKMX - FPKMY)
 A = (1/2)*(FPKMX + FPKMY)
 
 # Diagnostic
-print M
+# print M
 # print type(M)
-print A
+# print A
 # print type(A)
 
 plt.figure()
-plt.scatter( M, A )
+plt.scatter( A, M, alpha=0.1 )
 plt.title( "MA Plot" )
-plt.xlabel( "M" )
-plt.ylabel( "A" )
+plt.ylabel( "M" )
+plt.xlabel( "A" )
 plt.savefig( "MA-plot.png" )
 plt.show()

@@ -1,0 +1,3 @@
+Filtered out by min covereage = 5 at the Freebayes step.
+Filtered out intronic regions, UTRs, and intergenic regions at the snpEff step.
+

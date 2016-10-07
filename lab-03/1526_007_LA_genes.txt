@@ -1,0 +1,23 @@
+# The following table is formatted as tab separated values. 
+#GeneName	GeneId	TranscriptId	BioType	variants_impact_LOW	variants_impact_MODERATE	variants_impact_MODIFIER	variants_effect_3_prime_UTR_variant	variants_effect_downstream_gene_variant	variants_effect_intron_variant	variants_effect_missense_variant	variants_effect_non_coding_exon_variant	variants_effect_synonymous_variant	variants_effect_upstream_gene_variant
+Dnaic1	ENSMUSG00000061322	ENSMUST00000102963	protein_coding	0	0	4	0	0	4	0	0	0	0
+Fam219a	ENSMUSG00000028439	ENSMUST00000108049	protein_coding	0	0	1	0	0	1	0	0	0	0
+Fam219a	ENSMUSG00000028439	ENSMUST00000108050	protein_coding	0	0	1	0	0	1	0	0	0	0
+Fam219a	ENSMUSG00000028439	ENSMUST00000108052	protein_coding	0	0	1	0	0	1	0	0	0	0
+Fam219a	ENSMUSG00000028439	ENSMUST00000146276	processed_transcript	0	0	1	0	0	1	0	0	0	0
+Phf12	ENSMUSG00000037791	ENSMUST00000049167	protein_coding	0	0	6	0	0	6	0	0	0	0
+Phf12	ENSMUSG00000037791	ENSMUST00000108360	protein_coding	0	0	6	0	0	6	0	0	0	0
+Phf12	ENSMUSG00000037791	ENSMUST00000123662	nonsense_mediated_decay	0	0	3	0	0	3	0	0	0	0
+Phf12	ENSMUSG00000037791	ENSMUST00000125079	retained_intron	0	0	3	0	0	0	0	0	0	3
+Phf12	ENSMUSG00000037791	ENSMUST00000131680	nonsense_mediated_decay	0	0	3	0	0	3	0	0	0	0
+Phf12	ENSMUSG00000037791	ENSMUST00000141620	retained_intron	0	0	3	0	0	3	0	0	0	0
+Phf12	ENSMUSG00000037791	ENSMUST00000153428	protein_coding	0	0	3	0	0	3	0	0	0	0
+Phf12	ENSMUSG00000037791	ENSMUST00000153747	nonsense_mediated_decay	0	0	3	0	0	3	0	0	0	0
+Sez6	ENSMUSG00000000632	ENSMUST00000000646	protein_coding	1	1	0	0	0	0	1	0	1	0
+Sez6	ENSMUSG00000000632	ENSMUST00000093995	protein_coding	1	1	0	0	0	0	1	0	1	0
+Sez6	ENSMUSG00000000632	ENSMUST00000126866	retained_intron	0	0	2	0	2	0	0	0	0	0
+Sez6	ENSMUSG00000000632	ENSMUST00000140630	protein_coding	0	0	2	0	2	0	0	0	0	0
+Sez6	ENSMUSG00000000632	ENSMUST00000142542	retained_intron	0	0	2	0	0	0	0	2	0	0
+Sez6	ENSMUSG00000000632	ENSMUST00000151982	nonsense_mediated_decay	0	0	2	2	0	0	0	0	0	0
+Sez6	ENSMUSG00000000632	ENSMUST00000155087	retained_intron	0	0	2	0	0	0	0	2	0	0
+Vmn2r76	ENSMUSG00000091239	ENSMUST00000165771	protein_coding	0	0	1	0	0	1	0	0	0	0
